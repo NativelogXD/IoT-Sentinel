@@ -41,6 +41,20 @@ Para interactuar con el motor estadístico de Kitsune y definir las reglas de fi
 
 *(Para ver el diccionario completo de tokens y operadores, revisa el archivo `sintaxis.txt` en este repositorio).*
 
+## Convenciones de Escritura (Guía de Estilo)
+
+Para asegurar que el analizador léxico procese correctamente el código y no existan ambigüedades, la escritura de las reglas en **IoT-Sentinel** debe seguir estrictamente estas 4 convenciones, respetando la forma original de nuestro diccionario de tokens:
+
+*   **Palabras reservadas en minúsculas:** Todas las estructuras de control, decisiones, ciclos y valores lógicos deben escribirse exactamente como aparecen en el diccionario base, en minúscula sostenida.
+    *   *Ejemplos:* `armala`, `tonces`, `retornala`, `aja_si`, `o_entonce`, `ya_que_hpta`, `para`, `velda`.
+*   **Variables en minúsculas con guion bajo:** Los identificadores para nombrar métricas de red, variables de entorno y funciones utilizarán el formato *snake_case*, separando las palabras exclusivamente con guiones bajos.
+    *   *Ejemplos:* `tasa_paquetes`, `rmse_actual`, `puerto_destino`.
+*   **Operadores de comparación definidos:** Los operadores relacionales y de asignación son palabras clave propias de nuestra sintaxis, no símbolos matemáticos. Al igual que las palabras reservadas, deben aplicarse estrictamente en minúsculas para garantizar una tokenización exacta.
+    *   *Ejemplos:* `igualito_con`, `la_misma_vaina_que`, `mas_pesao_que`, `y`, `o`.
+*   **Formato consistente en todas las reglas:** Se exige uniformidad espacial en todo el código fuente.
+    *   Debe existir exactamente **un espacio en blanco** antes y después de cada operador (ej. `rmse_actual mas_pesao_que 0.8`).
+    *   La indentación para abrir un nuevo bloque de código (inmediatamente después de un delimitador `tonces`) debe ser estrictamente de **4 espacios**.
+
 ---
 
 ##  Reglas de Evaluación (Normativa del Proyecto)
