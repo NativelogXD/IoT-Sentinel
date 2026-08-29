@@ -1,45 +1,51 @@
-#  IoT-Sentinel
+# IoT-Sentinel
 
 Este repositorio contiene la definición y el motor de procesamiento de **IoT-Sentinel**, un sistema de evaluación de amenazas y microsegmentación adaptado para redes IoT, implementando un lenguaje de dominio específico.
 
 ---
 
-## Sobre Kitsune (El Motor Base)
+##  Sobre Kitsune (El Motor Base)
 
 Este proyecto toma como núcleo y referencia arquitectónica el repositorio [Kitsune-py](https://github.com/ymirsky/Kitsune-py). 
 
-**Kitsune** es un Sistema de Detección de Intrusos en la Red (NIDS) de tipo *plug-and-play* basado en aprendizaje profundo (Deep Learning). Fue diseñado para ser lo suficientemente ligero como para ejecutarse en tiempo real en dispositivos de borde (edge devices) como una Raspberry Pi, sin necesidad de enviar el tráfico a un servidor externo.
+**Kitsune** es un Sistema de Detección de Intrusos en la Red (NIDS) de tipo *plug-and-play* basado en aprendizaje profundo (*Deep Learning*). Fue diseñado para ser lo suficientemente ligero como para ejecutarse en tiempo real en dispositivos de borde (*edge devices*) como una Raspberry Pi, sin necesidad de enviar el tráfico a un servidor externo.
 
 El funcionamiento de Kitsune se divide en dos componentes principales que nuestro aplicativo respeta:
+
 1. **AfterImage:** Un extractor de características estadísticas que analiza el tráfico de la red (archivos PCAP) paquete por paquete de forma incremental.
-2. **KitNET:** Un ensamble de redes neuronales (Autoencoders) que procesa estas estadísticas. KitNET aprende cómo se ve el tráfico "normal" durante sus fases de mapeo y entrenamiento. Una vez entrenado, calcula un **Error Cuadrático Medio (RMSE)**; si el error de reconstrucción es alto, significa que el paquete es anómalo y representa un posible ataque.
+2. **KitNET:** Un ensamble de redes neuronales (*Autoencoders*) que procesa estas estadísticas. KitNET aprende cómo se ve el tráfico "normal" durante sus fases de mapeo y entrenamiento. Una vez entrenado, calcula un **Error Cuadrático Medio (RMSE)**; si el error de reconstrucción es alto, significa que el paquete es anómalo y representa un posible ataque.
 
 ---
 
-## 🗣️ Sintaxis del Lenguaje (Lenguajes Formales)
+##  Sintaxis del Lenguaje (Lenguajes Formales)
 
-Para interactuar con el motor estadístico de Kitsune y definir las reglas de firewall, desarrollamos un lenguaje formal propio con un analizador léxico y sintáctico a medida. El lenguaje utiliza una sintaxis coloquial, estructurada mediante indentación (espacios en blanco) similar a Python, y aplica los siguientes operadores y palabras reservadas:
+Para interactuar con el motor estadístico de Kitsune y definir las reglas de firewall, desarrollamos un lenguaje formal propio con un analizador léxico y sintáctico a medida. El lenguaje utiliza una sintaxis coloquial, estructurada mediante indentación (espacios en blanco) similar a Python.
 
-### Estructuras y Control
-*   `armala`: Declara el inicio de una rutina o función (equivale a `def`).
-*   `tonces`: Delimitador de inicio de bloque (equivale a `:`).
-*   `retornala`: Retorna un valor al flujo principal.
+### Diccionario de Tokens
 
-### Toma de Decisiones y Ciclos
-*   `aja_si` / `o_entonce` / `ya_que_hpta`: Estructuras condicionales para evaluar reglas (`if`, `elif`, `else`).
-*   `para` / `en`: Estructura iterativa para recorrer los paquetes capturados en la red.
-
-### Lógica y Comparación
-El lenguaje soporta operadores relacionales personalizados como `igualito_con` (asignación), `la_misma_vaina_que` (igualdad `==`), `mas_pesao_que` (`>`), entre otros. Además, utiliza conectores lógicos clave para combinar reglas:
-*   **`Y` (AND) / `O` (OR):** Para encadenar múltiples condiciones sobre el tráfico (ej. evaluar el RMSE de KitNET y un puerto de destino al mismo tiempo).
-*   **`no` (NOT):** Para negar estados booleanos (como `velda` o `embuste`).
+| Categoría | Sintaxis Personalizada | Equivalente | Descripción |
+| :--- | :--- | :--- | :--- |
+| **Control** | `armala` | `def` | Declara el inicio de una rutina o función. |
+| **Control** | `tonces` | `:` | Delimitador de inicio de bloque. |
+| **Control** | `retornala` | `return` | Retorna un valor al flujo principal. |
+| **Decisión** | `aja_si` | `if` | Condicional principal. |
+| **Decisión** | `o_entonce` | `elif` | Condicional alternativo. |
+| **Decisión** | `ya_que_hpta` | `else` | Acción por defecto. |
+| **Ciclos** | `para` | `for` | Estructura iterativa. |
+| **Ciclos** | `en` | `in` | Recorre elementos capturados. |
+| **Operador** | `igualito_con` | `=` | Asignación de variables. |
+| **Operador** | `la_misma_vaina_que` | `==` | Comparación de igualdad. |
+| **Operador** | `mas_pesao_que` | `>` | Comparación de superioridad. |
+| **Lógica** | `Y` / `O` | `and` / `or` | Encadena múltiples condiciones lógicas. |
+| **Lógica** | `no` | `not` | Niega estados booleanos (ej. `velda`, `embuste`). |
 
 *(Para ver el diccionario completo de tokens y operadores, revisa el archivo `sintaxis.txt` en este repositorio).*
 
 ---
+
 ##  Reglas de Evaluación (Normativa del Proyecto)
 
-El sistema evalúa las anomalías de red basándose en 15 reglas construidas con nuestro lenguaje formal, diseñadas para cumplir estrictamente con los lineamientos de la rúbrica de la asignatura:
+El sistema evalúa las anomalías de red basándose en 15 reglas construidas con nuestro lenguaje formal, diseñadas para cumplir estrictamente con los lineamientos de la rúbrica de la asignatura.
 
 **Reglas con una sola condición (Al menos 3):**
 1. `aja_si` rmse_actual mas_pesao_que 0.8 `tonces` notificar_anomalia()
@@ -136,4 +142,3 @@ armala iniciar_deteccion(archivo_pcap) tonces
                 bloquear_origen(paquete.ip_origen)
                 
     retornala contador_paquetes
-```
