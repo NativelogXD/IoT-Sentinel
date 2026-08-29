@@ -1,5 +1,5 @@
 # IoT-Sentinel
-
+integrantes: D.GONZALEZ ,J.CASTANEDA,J.OROZCO
 Este repositorio contiene la definición y el motor de procesamiento de **IoT-Sentinel**, un sistema de evaluación de amenazas y microsegmentación adaptado para redes IoT, implementando un lenguaje de dominio específico.
 
 ---
