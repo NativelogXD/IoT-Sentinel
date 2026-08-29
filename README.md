@@ -3,7 +3,8 @@ integrantes: D.GONZALEZ ,J.CASTANEDA,J.OROZCO
 
 # GRUPO HEREDEROS DE EPSTEIN
 
-![GRUPO HEREDEROS DE EPSTEIN](https://i.pinimg.com/736x/f0/f6/07/f0f607fc9546ba9dbe65364f09958ffd.jpg)
+
+<img src="https://i.pinimg.com/736x/f0/f6/07/f0f607fc9546ba9dbe65364f09958ffd.jpg" alt="Nombre Alternativo" width="300">
 
 Este repositorio contiene la definición y el motor de procesamiento de **IoT-Sentinel**, un sistema de evaluación de amenazas y microsegmentación adaptado para redes IoT, implementando un lenguaje de dominio específico.
 
