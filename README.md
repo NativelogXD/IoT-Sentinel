@@ -1,5 +1,7 @@
 # IoT-Sentinel
 integrantes: D.GONZALEZ ,J.CASTANEDA,J.OROZCO
+![GRUPO HEREDEROS DE EPSTEIN](https://i.pinimg.com/736x/f0/f6/07/f0f607fc9546ba9dbe65364f09958ffd.jpg)
+
 Este repositorio contiene la definición y el motor de procesamiento de **IoT-Sentinel**, un sistema de evaluación de amenazas y microsegmentación adaptado para redes IoT, implementando un lenguaje de dominio específico.
 
 ---
