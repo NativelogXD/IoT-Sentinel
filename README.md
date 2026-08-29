@@ -1,0 +1,113 @@
+#  IoT-Sentinel
+
+Este repositorio contiene la definición y el motor de procesamiento de **IoT-Sentinel**, un sistema de evaluación de amenazas y microsegmentación adaptado para redes IoT, implementando un lenguaje de dominio específico.
+
+---
+
+## Sobre Kitsune (El Motor Base)
+
+Este proyecto toma como núcleo y referencia arquitectónica el repositorio [Kitsune-py](https://github.com/ymirsky/Kitsune-py). 
+
+**Kitsune** es un Sistema de Detección de Intrusos en la Red (NIDS) de tipo *plug-and-play* basado en aprendizaje profundo (Deep Learning). Fue diseñado para ser lo suficientemente ligero como para ejecutarse en tiempo real en dispositivos de borde (edge devices) como una Raspberry Pi, sin necesidad de enviar el tráfico a un servidor externo.
+
+El funcionamiento de Kitsune se divide en dos componentes principales que nuestro aplicativo respeta:
+1. **AfterImage:** Un extractor de características estadísticas que analiza el tráfico de la red (archivos PCAP) paquete por paquete de forma incremental.
+2. **KitNET:** Un ensamble de redes neuronales (Autoencoders) que procesa estas estadísticas. KitNET aprende cómo se ve el tráfico "normal" durante sus fases de mapeo y entrenamiento. Una vez entrenado, calcula un **Error Cuadrático Medio (RMSE)**; si el error de reconstrucción es alto, significa que el paquete es anómalo y representa un posible ataque.
+
+---
+
+## 🗣️ Sintaxis del Lenguaje (Lenguajes Formales)
+
+Para interactuar con el motor estadístico de Kitsune y definir las reglas de firewall, desarrollamos un lenguaje formal propio con un analizador léxico y sintáctico a medida. El lenguaje utiliza una sintaxis coloquial, estructurada mediante indentación (espacios en blanco) similar a Python, y aplica los siguientes operadores y palabras reservadas:
+
+### Estructuras y Control
+*   `armala`: Declara el inicio de una rutina o función (equivale a `def`).
+*   `tonces`: Delimitador de inicio de bloque (equivale a `:`).
+*   `retornala`: Retorna un valor al flujo principal.
+
+### Toma de Decisiones y Ciclos
+*   `aja_si` / `o_entonce` / `ya_que_hpta`: Estructuras condicionales para evaluar reglas (`if`, `elif`, `else`).
+*   `para` / `en`: Estructura iterativa para recorrer los paquetes capturados en la red.
+
+### Lógica y Comparación
+El lenguaje soporta operadores relacionales personalizados como `igualito_con` (asignación), `la_misma_vaina_que` (igualdad `==`), `mas_pesao_que` (`>`), entre otros. Además, utiliza conectores lógicos clave para combinar reglas:
+*   **`Y` (AND) / `O` (OR):** Para encadenar múltiples condiciones sobre el tráfico (ej. evaluar el RMSE de KitNET y un puerto de destino al mismo tiempo).
+*   **`no` (NOT):** Para negar estados booleanos (como `velda` o `embuste`).
+
+*(Para ver el diccionario completo de tokens y operadores, revisa el archivo `sintaxis.txt` en este repositorio).*
+
+---
+
+##  Ejemplo de Uso y Aplicación
+
+El siguiente script, escrito completamente en nuestra sintaxis personalizada, es el corazón de **IoT-Sentinel**. 
+
+**¿Qué hace este código?** 
+El script carga una captura de red e itera sobre cada paquete. Durante los primeros paquetes, entrena las capas de mapeo y anomalías de la red neuronal KitNET. Una vez que el sistema termina de aprender, entra en modo de evaluación: calcula el puntaje RMSE de cada paquete nuevo y lo envía a la rutina `evaluar_amenaza`. Allí, nuestro motor de reglas decide si clasifica el tráfico como benigno, si alerta sobre una inundación de red o si ejecuta una microsegmentación bloqueando la IP de origen.
+
+```text
+// ==========================================
+// ARCHIVO: motor_kitsune_iot.ks
+// ==========================================
+
+limite_mapeo igualito_con 50000
+limite_entrenamiento igualito_con 100000
+contador_paquetes igualito_con 0
+modo_entrenamiento igualito_con velda
+
+armala evaluar_amenaza(rmse, tasa_paquetes, puerto, protocolo) tonces
+    
+    // Evaluando si el sistema ya terminó de aprender
+    aja_si no (modo_entrenamiento la_misma_vaina_que velda) tonces
+        
+        // Bloqueo crítico combinando RMSE alto y puertos de administración
+        aja_si rmse mas_pesao_que 0.85 Y (puerto la_misma_vaina_que 22 O puerto la_misma_vaina_que 23) tonces
+            retornala "ALERTA_CRITICA_SSH_TELNET"
+            
+        // Detección de inundación de paquetes
+        o_entonce rmse pesao_o_igualito_que 0.75 Y tasa_paquetes mas_pesao_que 5000 tonces
+            retornala "ALERTA_INUNDACION"
+            
+        // Anomalía general en protocolos no esperados
+        o_entonce protocolo no_cuadra_con "TCP" Y rmse mas_pesao_que 0.9 tonces
+            retornala "ALERTA_ANOMALIA_DESCONOCIDA"
+            
+        ya_que_hpta tonces
+            retornala "TRAFICO_BENIGNO"
+            
+    ya_que_hpta tonces
+        retornala "SISTEMA_APRENDIENDO"
+
+
+armala iniciar_deteccion(archivo_pcap) tonces
+    
+    extractor igualito_con instanciar_afterimage(archivo_pcap)
+    red_kitnet igualito_con instanciar_kitnet()
+    paquetes igualito_con leer_archivo(archivo_pcap)
+    
+    // Bucle principal procesando el tráfico de red
+    para paquete en paquetes tonces
+        
+        contador_paquetes igualito_con contador_paquetes + 1
+        vector_estadistico igualito_con extractor.obtener_caracteristicas(paquete)
+        
+        // Fase 1: Feature Mapper (FM)
+        aja_si contador_paquetes menor_o_igualito_que limite_mapeo tonces
+            red_kitnet.entrenar_capa_mapeo(vector_estadistico)
+            
+        // Fase 2: Anomaly Detector (AD)
+        o_entonce contador_paquetes menor_o_igualito_que limite_entrenamiento tonces
+            red_kitnet.entrenar_capa_anomalias(vector_estadistico)
+            
+        // Fase 3: Ejecución y Microsegmentación
+        ya_que_hpta tonces
+            modo_entrenamiento igualito_con embuste
+            rmse_calculado igualito_con red_kitnet.ejecutar_evaluacion(vector_estadistico)
+            estado igualito_con evaluar_amenaza(rmse_calculado, paquete.tasa, paquete.puerto, paquete.protocolo)
+            
+            aja_si estado no_cuadra_con "TRAFICO_BENIGNO" Y estado no_cuadra_con "SISTEMA_APRENDIENDO" tonces
+                REGISTRAR_ALERTA("Intrusión detectada en paquete: " + contador_paquetes)
+                bloquear_origen(paquete.ip_origen)
+                
+    retornala contador_paquetes
+```

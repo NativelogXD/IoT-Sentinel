@@ -1,0 +1,34 @@
+======================================================
+GLOSARIO
+======================================================
+
+--- ESTRUCTURAS DE CONTROL ---
+armala              -> def (Inicio de rutina/función)
+tonces              -> : (Delimitador de inicio de bloque)
+retornala           -> return (Devolver valor)
+
+--- CONDICIONALES ---
+aja_si              -> if (Condición principal)
+o_entonce           -> elif (Condición alternativa)
+ya_que_hpta         -> else (Acción por defecto)
+
+--- CICLOS ---
+para                -> for (Inicio de ciclo iterativo)
+en                  -> in (Definición de colección a iterar)
+
+--- OPERADORES RELACIONALES Y ASIGNACIÓN ---
+igualito_con        -> = (Asignación de variable)
+la_misma_vaina_que  -> == (Comparación de igualdad)
+no_cuadra_con       -> != (Comparación de desigualdad)
+menor_que           -> < (Estrictamente menor)
+mas_pesao_que       -> > (Estrictamente mayor)
+menor_o_igualito_que-> <= (Menor o igual)
+pesao_o_igualito_que-> >= (Mayor o igual)
+
+--- OPERADORES LÓGICOS Y BOOLEANOS ---
+Y                   -> and (Conjunción lógica)
+O                   -> or (Disyunción lógica)
+no                  -> not (Negación lógica)
+velda               -> True (Valor booleano verdadero)
+embuste             -> False (Valor booleano falso)
+nadita              -> None (Valor nulo/vacío)
