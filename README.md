@@ -37,6 +37,32 @@ El lenguaje soporta operadores relacionales personalizados como `igualito_con` (
 *(Para ver el diccionario completo de tokens y operadores, revisa el archivo `sintaxis.txt` en este repositorio).*
 
 ---
+##  Reglas de Evaluación (Normativa del Proyecto)
+
+El sistema evalúa las anomalías de red basándose en 15 reglas construidas con nuestro lenguaje formal, diseñadas para cumplir estrictamente con los lineamientos de la rúbrica de la asignatura:
+
+**Reglas con una sola condición (Al menos 3):**
+1. `aja_si` rmse_actual mas_pesao_que 0.8 `tonces` notificar_anomalia()
+2. `aja_si` fase_entrenamiento la_misma_vaina_que velda `tonces` actualizar_pesos_red()
+3. `aja_si` tasa_paquetes mas_pesao_que 5000 `tonces` activar_alerta_inundacion()
+4. `aja_si` dispositivo_aislado la_misma_vaina_que velda `tonces` descartar_paquete()
+5. `aja_si` rmse_actual menor_que 0.1 `tonces` marcar_trafico_benigno()
+6. `aja_si` tasa_paquetes la_misma_vaina_que 0 `tonces` ignorar_procesamiento()
+
+**Reglas con condiciones compuestas usando Y / O (Al menos 3):**
+7. `aja_si` tamaño_paquete mas_pesao_que 1500 Y puerto_destino la_misma_vaina_que 53 `tonces` registrar_posible_exfiltracion()
+8. `aja_si` tasa_paquetes mas_pesao_que 1000 O rmse_actual mas_pesao_que 0.9 `tonces` aislar_dispositivo_iot()
+9. `aja_si` puerto_destino la_misma_vaina_que 22 Y rmse_actual mas_pesao_que 0.5 `tonces` bloquear_puerto_ssh()
+10. `aja_si` puerto_destino la_misma_vaina_que 80 O puerto_destino la_misma_vaina_que 443 `tonces` permitir_trafico_web()
+
+**Reglas que combinan tipos de datos distintos - Numérico + Booleano (Al menos 2):**
+11. `aja_si` fase_entrenamiento la_misma_vaina_que embuste Y rmse_actual mas_pesao_que 0.85 `tonces` aplicar_microsegmentacion()
+12. `aja_si` modo_estricto la_misma_vaina_que velda O tasa_paquetes mas_pesao_que 10000 `tonces` bloquear_ip_origen()
+13. `aja_si` trafico_cifrado la_misma_vaina_que embuste Y puerto_destino la_misma_vaina_que 23 `tonces` alertar_conexion_telnet()
+14. `aja_si` tamaño_paquete menor_que 64 Y fase_entrenamiento la_misma_vaina_que embuste `tonces` registrar_paquete_malformado()
+15. `aja_si` ancho_banda_mbps mas_pesao_que 100 Y trafico_cifrado la_misma_vaina_que velda `tonces` limitar_ancho_banda()
+
+---
 
 ##  Ejemplo de Uso y Aplicación
 
