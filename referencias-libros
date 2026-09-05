@@ -1,0 +1,63 @@
+
+
+Reporte Bibliográfico: Fundamentos Teóricos para el Diseño de un Lenguaje de Programación
+
+1. Definición del Diccionario de Tokens (Análisis Léxico)
+
+Título del libro: Teoría de Autómatas y Lenguajes Formales.
+
+Autor: Elena Jurado Málaga.
+
+Concepto: Las expresiones regulares constituyen una notación normalizada para representar lenguajes regulares, mientras que los Autómatas Finitos son máquinas abstractas que procesan las cadenas de símbolos recibidas como entrada para reconocer dichos lenguajes.
+
+Sección aplicable al proyecto: "Tema 3: Expresiones y gramáticas regulares" y "Tema 4: Autómatas Finitos". Estas secciones aportan la justificación teórica para el diseño del Analizador Léxico (Scanner) del nuevo lenguaje. Proporcionan los métodos algorítmicos para definir el diccionario de tokens (como identificadores, palabras reservadas y números) utilizando expresiones regulares, y explican la simulación de Autómatas Finitos para agrupar los caracteres del código fuente de manera determinista.
+
+
+Título del libro: Procesamiento de lenguaje natural.
+
+Autores: Mg. Augusto Cortez Vásquez, Mg. Hugo Vega Huerta, Lic. Jaime Pariona Quispe.
+
+Concepto: Los lenguajes formales, como los de programación, se definen considerando un conjunto de componentes léxicos, reglas gramaticales y una delimitación semántica. Para el procesamiento de estos componentes, se utiliza un analizador lexicográfico (scanner) y un lexicón computacional, el cual actúa como un diccionario que especifica los rasgos de los componentes léxicos.
+
+Seccion aplicable al proyecto: "III. PROCESAMIENTO COMPUTACIONAL DEL LENGUAJE NATURAL(PLN)" y "V. EL LEXICÓN EN EL PROCESAMIENTO DE LENGUAJE NATURAL". Estas secciones justifican teóricamente la implementación de la primera fase del traductor (el Scanner). Aportan al proyecto la definición de cómo el analizador léxico se encarga de identificar los componentes léxicos definidos a priori en el lenguaje. Además, la teoría del "lexicón" sirve para documentar cómo estructurar internamente el diccionario de tokens del nuevo lenguaje para que interactúe eficientemente con el analizador sintáctico.
+
+
+--------------------------------------------------------
+
+2. Convenciones de Escritura y Sintaxis (Análisis Sintáctico)
+
+Título del libro: Teoría de Autómatas y Lenguajes Formales.
+
+Autor: Elena Jurado Málaga.
+
+Concepto: Las Gramáticas Independientes del Contexto (GIC) definen la estructura de las frases de un lenguaje mediante reglas de derivación (producciones), y los Autómatas de Pila son los mecanismos teóricos que permiten reconocer si una cadena pertenece a dicho lenguaje.  
+
+Sección aplicable al proyecto: "Tema 2: Lenguajes y Gramáticas Formales" y "Tema 5: G.I.C. y Autómatas de Pila". Estas secciones fundamentan el desarrollo de la fase de Análisis Sintáctico (Parser) del proyecto. Aportan las bases para definir las convenciones de escritura del nuevo lenguaje mediante la construcción de árboles de derivación y gramáticas (como LL o LR), explicando cómo un Autómata de Pila evalúa que la secuencia de tokens ingresada respete la estructura gramatical definida.
+
+
+--------------------------------------------------------
+
+3. Reglas de Evaluación y Significado (Análisis Semántico)
+
+Título del libro: Teoría de Autómatas y Lenguajes Formales.
+
+Autor: Elena Jurado Málaga.
+
+Concepto: Las Gramáticas Atribuidas son una extensión de las GIC que asocian atributos semánticos a los símbolos y funciones semánticas a las producciones, permitiendo definir formalmente la semántica estática y dinámica de un lenguaje de programación.
+
+Sección aplicable al proyecto: "Tema 6: Gramáticas Atribuidas". Esta sección es clave para documentar las Reglas de Evaluación del compilador o traductor. Aporta el mecanismo para evaluar el significado del código una vez superada la validación sintáctica, explicando cómo calcular atributos (como los tipos de datos o los valores) para comprobar condiciones lógicas, por ejemplo, que los operandos de una suma sean compatibles antes de proceder a la ejecución o traducción.
+
+----------------------------------------------------------
+REFERENCIAs
+Teoría de Autómatas y Lenguajes Formales.
+https://www.academia.edu/6122529/Teor%C3%ADas_de_Aut%C3%B3matas_Colecci%C3%B3n_manuales_uex_55
+
+Procesamiento de lenguaje natural
+https://d1wqtxts1xzle7.cloudfront.net/77493941/5121-libre.pdf?1640725237=&response-content-disposition=inline%3B+filename%3DProcesamiento_de_lenguaje_natural.pdf&Expires=1788570093&Signature=Pcp9p8mBITdbfqFwM7d9e0FaRj9wBxluOxPcNb~EQ3zAhcqynxZFFvUmMOAWZeSrxORBLoTeGNHjA19gzvVmQbmfSJi2hchgLGPAQAQAqseMyPB9efpTurvt3KcTS6Nw0UGo6qsY4zSIgQwtdy35Pkn-PP~EjGKSuuKxDfl2rgyJs4OaAaL4c~wdB8P5ppsGvFDWcpIfi~ug5LGiH514A1oWeqln4j1euKPQZK1mN4r5cZiuNs7n7OCBGju9fJxF06S6GqQE~sDjz0c1peRgSZTudXUDPYrrsUk~Y1OINY7vxKdqSgmeHocbuKAtF8DUnXyR-amksveNM3ARJwso4w__&Key-Pair-Id=APKAJLOHF5GGSLRBV4ZA
+
+
+
+
+
+
+
