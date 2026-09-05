@@ -46,6 +46,9 @@ Para interactuar con el motor estadístico de Kitsune y definir las reglas de fi
 | **Lógica** | `no` | `not` | Niega estados booleanos (ej. `velda`, `embuste`). |
 
 *(Para ver el diccionario completo de tokens y operadores, revisa el archivo `sintaxis.txt` en este repositorio).*
+# sintaxis basada en diccionario costenol de la governacion de barranquilla
+**link** **https://barranquilla.gov.co/descubre/diccionario-costenol**
+
 
 ## Convenciones de Escritura (Guía de Estilo)
 
