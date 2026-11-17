@@ -1,0 +1,5 @@
+entero n igualito_con 1
+mientras n menor_o_igualito_que 5 tonces {
+    pinta(n * 3)
+    n igualito_con n + 1
+}

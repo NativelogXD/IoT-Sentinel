@@ -1,0 +1,2 @@
+entero a igualito_con 5
+pinta(edad)

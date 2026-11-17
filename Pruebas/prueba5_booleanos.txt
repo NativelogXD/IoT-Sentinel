@@ -1,0 +1,6 @@
+booleano activo igualito_con velda
+booleano apagado igualito_con embuste
+
+aja_si activo Y no apagado tonces {
+    pinta("El sistema está encendido")
+}

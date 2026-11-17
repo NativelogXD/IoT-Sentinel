@@ -1,0 +1,3 @@
+entero x igualito_con -5
+entero y igualito_con -(x + 2)
+pinta(y)

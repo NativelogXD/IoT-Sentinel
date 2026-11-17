@@ -1,0 +1,4 @@
+# Esto imprimirá los números del 0 al 4
+para i en 5 tonces {
+    pinta(i)
+}

@@ -1,0 +1,11 @@
+entero n igualito_con 7
+
+aja_si n pesao_o_igualito_que 1 Y n menor_o_igualito_que 10 tonces {
+    pinta("en rango")
+} ya_que_hpta {
+    pinta("fuera de rango")
+}
+
+aja_si no (n menor_que 5) tonces {
+    pinta("no es menor a 5")
+}

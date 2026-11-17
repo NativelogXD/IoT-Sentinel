@@ -1,0 +1,8 @@
+entero global igualito_con 10
+
+aja_si global mas_pesao_que 5 tonces {
+    entero local igualito_con 20
+    pinta(local) 
+}
+
+pinta(local)

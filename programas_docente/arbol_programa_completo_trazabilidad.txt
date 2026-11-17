@@ -1,0 +1,193 @@
+================================================================================
+ARBOL COMPLETO QUE USA EL INTERPRETE
+Archivo origen: ../explicacion/programa_completo_trazabilidad.txt
+================================================================================
+
+--------------------------------------------------------------------------------
+PARTE 1: REPRESENTACION JERARQUICA (MODO ARBOL)
+--------------------------------------------------------------------------------
+
+Programa (7 instrucciones: indices [0] a [6])
+├── [0] Declaracion (tipo='entero' [2:1], nombre='base' [2:8])
+│    └── valor: Negativo (operador='-' [2:26])
+│         └── valor: Numero ('2' [2:27])
+│
+├── [1] Declaracion (tipo='real' [3:1], nombre='nota' [3:6])
+│    └── valor: OperacionBinaria (operador='/' [3:39])
+│         ├── izq: OperacionBinaria (operador='*' [3:35])
+│         │    ├── izq: OperacionBinaria (operador='+' [3:30])
+│         │    │    ├── izq: Variable ('base' [3:25])
+│         │    │    └── der: Numero ('6' [3:32])
+│         │    └── der: Numero ('2' [3:37])
+│         └── der: Numero ('2.0' [3:41])
+│
+├── [2] Declaracion (tipo='booleano' [4:1], nombre='activo' [4:10])
+│    └── valor: OperacionLogica (operador='Y' [4:60])
+│         ├── izq: Comparacion (operador='pesao_o_igualito_que' [4:35])
+│         │    ├── izq: Variable ('nota' [4:30])
+│         │    └── der: Numero ('3.0' [4:56])
+│         └── der: NegacionLogica (operador='no' [4:62])
+│              └── valor: Booleano ('embuste' [4:65])
+│
+├── [3] Si (palabra='aja_si' [6:1])
+│    ├── condicion: OperacionLogica (operador='O' [6:15])
+│    │    ├── izq: Variable ('activo' [6:8])
+│    │    └── der: Comparacion (operador='mas_pesao_que' [6:22])
+│    │         ├── izq: Variable ('base' [6:17])
+│    │         └── der: Numero ('0' [6:36])
+│    ├── bloque_si: [lista con 2 instrucciones]
+│    │    ├── [0] Declaracion (tipo='texto' [7:5], nombre='estado' [7:11])
+│    │    │    └── valor: Cadena ('aprobado' [7:31])
+│    │    └── [1] Pinta (palabra='pinta' [8:5])
+│    │         └── valor: Variable ('estado' [8:11])
+│    └── bloque_else: [lista con 1 instruccion]
+│         └── [0] Pinta (palabra='pinta' [10:5])
+│              └── valor: Cadena ('reprobado' [10:11])
+│
+├── [4] Mientras (palabra='mientras' [13:1])
+│    ├── condicion: Comparacion (operador='menor_que' [13:15])
+│    │    ├── izq: Variable ('base' [13:10])
+│    │    └── der: Numero ('0' [13:25])
+│    └── bloque: [lista con 1 instruccion]
+│         └── [0] Asignacion (nombre='base' [14:5])
+│              └── valor: OperacionBinaria (operador='+' [14:28])
+│                   ├── izq: Variable ('base' [14:23])
+│                   └── der: Numero ('1' [14:30])
+│
+├── [5] Para (variable='i' [17:6])
+│    ├── iterable: Numero ('2' [17:11])
+│    └── bloque: [lista con 1 instruccion]
+│         └── [0] Pinta (palabra='pinta' [18:5])
+│              └── valor: OperacionBinaria (operador='+' [18:16])
+│                   ├── izq: Variable ('base' [18:11])
+│                   └── der: Variable ('i' [18:18])
+│
+└── [6] Pinta (palabra='pinta' [21:1])
+     └── valor: Variable ('estado' [21:7])
+
+
+--------------------------------------------------------------------------------
+PARTE 2: OBJETO TEXTUAL EXACTO EN PYTHON (RETORNO DE parser.programa())
+--------------------------------------------------------------------------------
+
+Programa(instrucciones=[
+    # [0] entero base igualito_con -2
+    Declaracion(
+        tipo=Token(tipo='TIPO', texto='entero', linea=2, columna=1),
+        nombre=Token(tipo='IDENTIFICADOR', texto='base', linea=2, columna=8),
+        valor=Negativo(
+            operador=Token(tipo='OPERADOR', texto='-', linea=2, columna=26),
+            valor=Numero(token=Token(tipo='NUMERO', texto='2', linea=2, columna=27))
+        )
+    ),
+
+    # [1] real nota igualito_con (base + 6) * 2 / 2.0
+    Declaracion(
+        tipo=Token(tipo='TIPO', texto='real', linea=3, columna=1),
+        nombre=Token(tipo='IDENTIFICADOR', texto='nota', linea=3, columna=6),
+        valor=OperacionBinaria(
+            izq=OperacionBinaria(
+                izq=OperacionBinaria(
+                    izq=Variable(token=Token(tipo='IDENTIFICADOR', texto='base', linea=3, columna=25)),
+                    operador=Token(tipo='OPERADOR', texto='+', linea=3, columna=30),
+                    der=Numero(token=Token(tipo='NUMERO', texto='6', linea=3, columna=32))
+                ),
+                operador=Token(tipo='OPERADOR', texto='*', linea=3, columna=35),
+                der=Numero(token=Token(tipo='NUMERO', texto='2', linea=3, columna=37))
+            ),
+            operador=Token(tipo='OPERADOR', texto='/', linea=3, columna=39),
+            der=Numero(token=Token(tipo='NUMERO', texto='2.0', linea=3, columna=41))
+        )
+    ),
+
+    # [2] booleano activo igualito_con nota pesao_o_igualito_que 3.0 Y no embuste
+    Declaracion(
+        tipo=Token(tipo='TIPO', texto='booleano', linea=4, columna=1),
+        nombre=Token(tipo='IDENTIFICADOR', texto='activo', linea=4, columna=10),
+        valor=OperacionLogica(
+            izq=Comparacion(
+                izq=Variable(token=Token(tipo='IDENTIFICADOR', texto='nota', linea=4, columna=30)),
+                operador=Token(tipo='OPERADOR_RELACIONAL', texto='pesao_o_igualito_que', linea=4, columna=35),
+                der=Numero(token=Token(tipo='NUMERO', texto='3.0', linea=4, columna=56))
+            ),
+            operador=Token(tipo='PALABRA_RESERVADA', texto='Y', linea=4, columna=60),
+            der=NegacionLogica(
+                operador=Token(tipo='PALABRA_RESERVADA', texto='no', linea=4, columna=62),
+                valor=Booleano(token=Token(tipo='BOOLEANO', texto='embuste', linea=4, columna=65))
+            )
+        )
+    ),
+
+    # [3] aja_si activo O base mas_pesao_que 0 tonces { ... } ya_que_hpta { ... }
+    Si(
+        palabra=Token(tipo='PALABRA_RESERVADA', texto='aja_si', linea=6, columna=1),
+        condicion=OperacionLogica(
+            izq=Variable(token=Token(tipo='IDENTIFICADOR', texto='activo', linea=6, columna=8)),
+            operador=Token(tipo='PALABRA_RESERVADA', texto='O', linea=6, columna=15),
+            der=Comparacion(
+                izq=Variable(token=Token(tipo='IDENTIFICADOR', texto='base', linea=6, columna=17)),
+                operador=Token(tipo='OPERADOR_RELACIONAL', texto='mas_pesao_que', linea=6, columna=22),
+                der=Numero(token=Token(tipo='NUMERO', texto='0', linea=6, columna=36))
+            )
+        ),
+        bloque_si=[
+            Declaracion(
+                tipo=Token(tipo='TIPO', texto='texto', linea=7, columna=5),
+                nombre=Token(tipo='IDENTIFICADOR', texto='estado', linea=7, columna=11),
+                valor=Cadena(token=Token(tipo='CADENA', texto='aprobado', linea=7, columna=31))
+            ),
+            Pinta(
+                palabra=Token(tipo='PALABRA_RESERVADA', texto='pinta', linea=8, columna=5),
+                valor=Variable(token=Token(tipo='IDENTIFICADOR', texto='estado', linea=8, columna=11))
+            )
+        ],
+        bloque_else=[
+            Pinta(
+                palabra=Token(tipo='PALABRA_RESERVADA', texto='pinta', linea=10, columna=5),
+                valor=Cadena(token=Token(tipo='CADENA', texto='reprobado', linea=10, columna=11))
+            )
+        ]
+    ),
+
+    # [4] mientras base menor_que 0 tonces { base igualito_con base + 1 }
+    Mientras(
+        condicion=Comparacion(
+            izq=Variable(token=Token(tipo='IDENTIFICADOR', texto='base', linea=13, columna=10)),
+            operador=Token(tipo='OPERADOR_RELACIONAL', texto='menor_que', linea=13, columna=15),
+            der=Numero(token=Token(tipo='NUMERO', texto='0', linea=13, columna=25))
+        ),
+        bloque=[
+            Asignacion(
+                nombre=Token(tipo='IDENTIFICADOR', texto='base', linea=14, columna=5),
+                valor=OperacionBinaria(
+                    izq=Variable(token=Token(tipo='IDENTIFICADOR', texto='base', linea=14, columna=23)),
+                    operador=Token(tipo='OPERADOR', texto='+', linea=14, columna=28),
+                    der=Numero(token=Token(tipo='NUMERO', texto='1', linea=14, columna=30))
+                )
+            )
+        ],
+        palabra=Token(tipo='PALABRA_RESERVADA', texto='mientras', linea=13, columna=1)
+    ),
+
+    # [5] para i en 2 tonces { pinta(base + i) }
+    Para(
+        variable=Token(tipo='IDENTIFICADOR', texto='i', linea=17, columna=6),
+        iterable=Numero(token=Token(tipo='NUMERO', texto='2', linea=17, columna=11)),
+        bloque=[
+            Pinta(
+                palabra=Token(tipo='PALABRA_RESERVADA', texto='pinta', linea=18, columna=5),
+                valor=OperacionBinaria(
+                    izq=Variable(token=Token(tipo='IDENTIFICADOR', texto='base', linea=18, columna=11)),
+                    operador=Token(tipo='OPERADOR', texto='+', linea=18, columna=16),
+                    der=Variable(token=Token(tipo='IDENTIFICADOR', texto='i', linea=18, columna=18))
+                )
+            )
+        ]
+    ),
+
+    # [6] pinta(estado)
+    Pinta(
+        palabra=Token(tipo='PALABRA_RESERVADA', texto='pinta', linea=21, columna=1),
+        valor=Variable(token=Token(tipo='IDENTIFICADOR', texto='estado', linea=21, columna=7))
+    )
+])

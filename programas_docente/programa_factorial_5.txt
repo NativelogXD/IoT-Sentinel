@@ -1,0 +1,7 @@
+entero n igualito_con 5
+entero resultado igualito_con 1
+mientras n mas_pesao_que 1 tonces {
+    resultado igualito_con resultado * n
+    n igualito_con n - 1
+}
+pinta(resultado)
