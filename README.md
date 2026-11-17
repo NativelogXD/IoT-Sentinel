@@ -32,24 +32,24 @@ python main.py programa_promedio_notas.txt
 ### Nombre y por qué se llama así
 **IoT-Sentinel** nace como un lenguaje formal especializado para redactar **reglas de detección y políticas de respuesta en dispositivos IoT**, combinando la legibilidad de una sintaxis tipo Python con expresiones propias del **Diccionario Costeñol** (`igualito_con`, `aja_si`, `ya_que_hpta`, `tonces`, `la_misma_vaina_que`, `mas_pesao_que`, `pinta`, `velda`, `embuste`), de modo que cada regla de monitoreo pueda leerse como una decisión natural.
 
-### Tabla de Traducción desde Java
+### Tabla de Traducción desde Java y Python
 
-| Elemento | Java | IoT-Sentinel | Ejemplo en IoT-Sentinel |
-| :--- | :--- | :--- | :--- |
-| **Tipos de datos** | `int`, `double`, `String`, `boolean` | `entero`, `real`, `texto`, `booleano` | `entero puerto igualito_con 8080` |
-| **Asignación** | `=` | `igualito_con` | `suma igualito_con suma + n` |
-| **Fin de instrucción** | `;` | Salto de línea `\n` (`FIN_INSTRUCCION`) | *(sin `;` al final de la línea)* |
-| **Salida por consola** | `System.out.println(x);` | `pinta(x)` | `pinta("aprueba")` |
-| **Condicional** | `if (...) { ... } else { ... }` | `aja_si ... tonces { ... } ya_que_hpta { ... }` | `aja_si n mas_pesao_que 10 tonces { pinta("ok") }` |
-| **Ciclo `while`** | `while (...) { ... }` | `mientras ... tonces { ... }` | `mientras n menor_o_igualito_que 5 tonces { n igualito_con n + 1 }` |
-| **Ciclo `for`** | `for (int i = 0; i < n; i = i + 1) { ... }` | `para i en n tonces { ... }` | `para i en 5 tonces { pinta(i) }` |
-| **Comparadores** | `==`, `!=`, `<`, `>`, `<=`, `>=` | `la_misma_vaina_que`, `no_cuadra_con`, `menor_que`, `mas_pesao_que`, `menor_o_igualito_que`, `pesao_o_igualito_que` | `a mas_pesao_que 0` |
-| **Operadores lógicos** | `&&`, `\|\|`, `!` | `Y`, `O`, `no` | `n pesao_o_igualito_que 1 Y n menor_o_igualito_que 10` |
-| **Booleanos** | `true`, `false` | `velda`, `embuste` | `booleano listo igualito_con velda` |
-| **Comentarios** | `// ...`, `/* ... */` | `# ...`, `/* ... */` | `# calcula total` |
+| Elemento | Java | Python | IoT-Sentinel | Ejemplo en IoT-Sentinel |
+| :--- | :--- | :--- | :--- | :--- |
+| **Tipos de datos** | `int`, `double`, `String`, `boolean` | `int`, `float`, `str`, `bool` *(dinámico)* | `entero`, `real`, `texto`, `booleano` | `entero puerto igualito_con 8080` |
+| **Asignación** | `=` | `=` | `igualito_con` | `suma igualito_con suma + n` |
+| **Fin de instrucción** | `;` | Salto de línea `\n` | Salto de línea `\n` (`FIN_INSTRUCCION`) | *(sin `;` al final de la línea)* |
+| **Salida por consola** | `System.out.println(x);` | `print(x)` | `pinta(x)` | `pinta("aprueba")` |
+| **Condicional** | `if (...) { ... } else { ... }` | `if ...: ... else: ...` | `aja_si ... tonces { ... } ya_que_hpta { ... }` | `aja_si n mas_pesao_que 10 tonces { pinta("ok") }` |
+| **Ciclo `while`** | `while (...) { ... }` | `while ...:` | `mientras ... tonces { ... }` | `mientras n menor_o_igualito_que 5 tonces { n igualito_con n + 1 }` |
+| **Ciclo `for`** | `for (int i = 0; i < n; i = i + 1) { ... }` | `for i in range(n):` | `para i en n tonces { ... }` | `para i en 5 tonces { pinta(i) }` |
+| **Comparadores** | `==`, `!=`, `<`, `>`, `<=`, `>=` | `==`, `!=`, `<`, `>`, `<=`, `>=` | `la_misma_vaina_que`, `no_cuadra_con`, `menor_que`, `mas_pesao_que`, `menor_o_igualito_que`, `pesao_o_igualito_que` | `a mas_pesao_que 0` |
+| **Operadores lógicos** | `&&`, `\|\|`, `!` | `and`, `or`, `not` | `Y`, `O`, `no` | `n pesao_o_igualito_que 1 Y n menor_o_igualito_que 10` |
+| **Booleanos** | `true`, `false` | `True`, `False` | `velda`, `embuste` | `booleano listo igualito_con velda` |
+| **Comentarios** | `// ...`, `/* ... */` | `# ...` | `# ...`, `/* ... */` | `# calcula total` |
 
 ### Una Decisión de Diseño
-**Sin punto y coma (`;`) y con palabras en español costeño (`igualito_con`):** En lugar de exigir `;` al final de cada instrucción como en Java, el lexer emite un token `FIN_INSTRUCCION` al detectar el salto de línea `\n` cuando hubo tokens en esa línea. Además, la asignación se escribe `igualito_con` y la igualdad `la_misma_vaina_que`, eliminando la confusión clásica entre `=` y `==`.
+**Híbrido entre Java y Python con palabras en español costeño:** Al igual que en **Python**, eliminamos el punto y coma (`;`) y usamos el salto de línea `\n` (`FIN_INSTRUCCION`) para cerrar instrucciones, así como `para i en n` en lugar del `for` clásico; pero conservamos de **Java** los tipos explícitos (`entero`, `real`, `texto`, `booleano`) validados estrictamente con la tabla `ACEPTA` y la delimitación de bloques con llaves `{ ... }`. Además, la asignación usa `igualito_con` y la igualdad `la_misma_vaina_que`, eliminando cualquier confusión entre `=` y `==`.
 
 ---
 
